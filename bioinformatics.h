@@ -17,12 +17,12 @@ strlen(str1).
 */
 int getHammingDistance(char* str1, char* str2){
 	int count = 0,i;
-	if(strlen(str1)!=strlen(str2)){
+	if(strlen(str1)!=strlen(str2)){ // skips compare when string length of two strings are not equal
 		printf("Error! String are not equal!\n");
 	}
 	else {
 		for(i = 0; i < strlen(str1);i++){
-			if(str1[i] != str2[i]) count++;
+			if(str1[i] != str2[i]) count++; //count iterates every non matching letters in same indexes
 		}
 	}
 	return count;
@@ -35,16 +35,16 @@ of pattern in original.
 int countSubstrPattern(char* original, char* pattern){
 	int i, count = 0;
 	char temp[strlen(original)];
-	strcpy(temp, original);
+	strcpy(temp, original); //clones original to a temp string
 
-	if(strlen(pattern) > strlen(original)) return count;
+	if(strlen(pattern) > strlen(original)) return count; //if pattern is longer than the original, skip compare, prompt error
 
-	while(temp[0] != '\0'){
-		if((strstr(temp,pattern)) != NULL){
-		count++;
+	while(temp[0] != '\0'){ //while temp holds a char/string
+		if((strstr(temp,pattern)) != NULL){ //if there exist a sub string of temp by pattern
+		count++; 							//count iterates
 		strcpy(temp ,strstr(temp, pattern)+1); //the new original will be the substring less the first letter
 		}
-		else break;
+		else break; //since there are no substring found in temp. exit loop
 	}
 	return count;
 }
@@ -53,13 +53,13 @@ Given an alphabet string where all letters are assumed to be unique, this
 function returns true if the string str is a valid string based on the letters of alphabet.
 */
 int isValidString(char* str, char* alphabet){
-	int i,j, result;
+	int i,j, result; //let result be the flag for boolean 1 - true 0 - false
 	for(i = 0 ; i < strlen(str); i++){
-		result = 0;
+		result = 0; //set flag to false
 		for(j = 0 ; j < strlen(alphabet); j++){
-			if(str[i] == alphabet[j]) result = 1;
+			if(str[i] == alphabet[j]) result = 1; //if one of the alphabet match the char in str, set flag to true
 		}
-		if(result == 0){
+		if(result == 0){ //if the alphabet is traverse and str[i] did not match any, str is invalid string
 			printf("false\n");
 			return result;
 		} 
@@ -77,12 +77,12 @@ string implementations.
 
 int getSkew(char* str, int n){
 	int count = 0,i;
-	if(n > strlen(str) || n < 1){
+	if(n > strlen(str) || n < 1){ //n should be positive and around the range of the length of str
 		printf("Error! index out of bounds\n");
 		return -1;
 	} 
 	for(i = 0 ; i< n; i++){
-		if(str[i] == 'G') count++;
+		if(str[i] == 'G') count++; 
 		else if(str[i] == 'C') count--;
 	}
 	return count;
@@ -103,7 +103,7 @@ int getMaxSkewN(char* str, int n){
 	maxCount = getSkew(str,1);
 	for(i = 1; i < n; i++){
 		count = getSkew(str,i+1);
-		if(count > maxCount) maxCount = count;
+		if(count > maxCount) maxCount = count; //if the newly found count is greater than the current count, change max
 	}
 	printf("Max skew is %i\n", maxCount);
 	return maxCount;
@@ -123,7 +123,7 @@ int getMinSkewN(char* str, int n){
 	minCount = getSkew(str,1);
 	for(i = 1; i < n; i++){
 		count = getSkew(str,i+1);
-		if(count < minCount) minCount = count;
+		if(count < minCount) minCount = count; //if the newly found count is lesser than the current count, change min
 	}
 	printf("Min skew is %i\n", minCount);
 	return minCount;
